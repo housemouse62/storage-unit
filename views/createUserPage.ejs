@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="main-header">
+      <div class="logo-nav-form">
+        <nav class="main-nav">
+          <a class="main-links" href="/">All Folders</a>
+          <a class="main-links" href="/file">All Files</a>
+          <%- include("../partials/loginLogout.ejs") %>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content" class="page-main">
+      <form method="POST" action="/createUser">
+        <div class="form-fields">
+          <div class="create-user-title">
+            <h1 class="create-user">Create New User</h1>
+          </div>
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Name"
+              value="<%= locals.formData?.name || '' %>"
+            />
+          </div>
+          <div class="form-field">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Email Address"
+              value="<%= locals.formData?.email || '' %>"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              id="password"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
+        </div>
+        <%- include("../partials/passwordErrors.ejs") %>
+        <button type="submit" class="form-button">Create User</button>
+      </form>
+    </main>
+    <footer>Thought Windows</footer>
+  </body>
+</html>
