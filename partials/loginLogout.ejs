@@ -1,0 +1,13 @@
+<div class="login-link <%= isAdmin ? 'login-link--active' : '' %>">
+  <% if (isAdmin) { %>
+    <span class="login-status">
+      <span class="login-dot"></span>
+      <span class="login-username"><%= userName %></span>
+    </span>
+    <form method="POST" action="/">
+      <button type="submit" class="logout-button">Logout</button>
+    </form>
+  <% } else { %>
+    <a class="login-nav-link" href="/login?from=<%= locals.loginFrom || locals.currentPath || '/' %>">Login</a>
+  <% } %>
+</div>
