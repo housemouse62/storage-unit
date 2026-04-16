@@ -1,10 +1,10 @@
-<div class="login-link <%= isAdmin ? 'login-link--active' : '' %>">
-  <% if (isAdmin) { %>
+<div class="login-link <%= user ? 'login-link--active' : '' %>">
+  <% if (user) { %>
     <span class="login-status">
       <span class="login-dot"></span>
-      <span class="login-username"><%= userName %></span>
+      <span class="login-username"><%= user.name %></span>
     </span>
-    <form method="POST" action="/">
+    <form method="POST" action="/logout">
       <button type="submit" class="logout-button">Logout</button>
     </form>
   <% } else { %>

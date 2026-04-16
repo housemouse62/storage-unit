@@ -12,7 +12,7 @@
         <nav class="main-nav">
           <a class="main-links" href="/">All Folders</a>
           <a class="main-links" href="/file">All Files</a>
-          <%- include("../partials/loginLogout.ejs") %>
+          <%# include("../partials/loginLogout.ejs") %>
         </nav>
       </div>
     </header>
@@ -26,6 +26,7 @@
             <label for="name">Name</label>
             <input
               type="text"
+              name="name"
               id="name"
               placeholder="Name"
               value="<%= locals.formData?.name || '' %>"
@@ -63,7 +64,7 @@
             />
           </div>
         </div>
-        <%- include("../partials/passwordErrors.ejs") %>
+        <%# include("../partials/passwordErrors.ejs") %>
         <button type="submit" class="form-button">Create User</button>
       </form>
     </main>

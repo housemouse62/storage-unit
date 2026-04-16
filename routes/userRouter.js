@@ -39,7 +39,7 @@ userRouter.post(
     if (!passwordErrors.isEmpty()) {
       const passwordErrorPayload = {
         passwordErrors: passwordErrors.array(),
-        passwordData: req.body,
+        formData: req.body,
       };
 
       return res.status(400).render("createUserPage", {
