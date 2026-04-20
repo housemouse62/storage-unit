@@ -2,6 +2,8 @@ import express from "express";
 import { prisma } from "../db/prismaClient.js";
 import checkAuth from "../middleware/auth.js";
 import { check } from "express-validator";
+import multer from "multer";
+const upload = multer({ dest: "./public/uploads" });
 
 const fileRouter = express.Router();
 
@@ -21,9 +23,15 @@ fileRouter.get("/:fileID", async (req, res) => {
 
 fileRouter.patch("/:fileID", async (req, res) => {
   const file = await prisma.file.update({
-    where: { id: partseInt(req.params.fileID) },
+    where: { id: parseInt(req.params.fileID) },
     data: { folderID: req.body.folderID },
   });
   res.render("fileDetails", { file: file });
 });
+
+fileRouter.post("/upload", upload.single("uploaded_file"), function (req, res) {
+  console.log(req.file, req.body);
+  res.render("/folder");
+});
+
 export default fileRouter;

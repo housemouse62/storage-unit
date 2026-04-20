@@ -17,7 +17,16 @@
       </div>
     </header>
     <h1>Folder Detail</h1>
-    <label for="upload">Upload File:</label>
-    <input type="file" name="upload" id="upload" class="upload" />
+    <form action="/file/upload" enctype="multipart/form-data" method="post">
+      <label for="upload">Upload File:</label>
+      <input
+        type="file"
+        name="uploaded_file"
+        id="uploaded_file"
+        class="upload"
+      />
+      <input type="text" name="name" id="name" />
+      <button type="submit">Upload File</button>
+    </form>
   </body>
 </html>
