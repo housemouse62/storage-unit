@@ -20,6 +20,7 @@ folderRouter.get("/:folderID", async (req, res) => {
 });
 
 folderRouter.post("/create", async (req, res) => {
+  console.log(req.body);
   await prisma.folder.create({
     data: {
       name: req.body.name,

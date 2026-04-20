@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Storage Unit | Log In</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="main-header">
+      <div class="logo-nav-form">
+        <nav class="main-nav">
+          <a class="main-links" href="/folder">All Folders</a>
+          <a class="main-links" href="/file">All Files</a>
+          <%- include("../partials/loginLogout.ejs") %>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content" class="page-main">
+      <form method="POST" action="/login">
+        <div class="form-fields">
+          <div class="login-user">
+            <h1 class="login">Log In</h1>
+          </div>
+          <div class="form-field">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="E-mail Address"
+              vale="<% locals.formData?.email || '' %>"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+        </div>
+        <button type="submit" class=""form-button">Log In</button>
+      </form>
+    </main>
+  </body>
+</html>
