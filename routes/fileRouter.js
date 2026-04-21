@@ -29,9 +29,22 @@ fileRouter.patch("/:fileID", async (req, res) => {
   res.render("fileDetails", { file: file });
 });
 
-fileRouter.post("/upload", upload.single("uploaded_file"), function (req, res) {
-  console.log(req.file, req.body);
-  res.render("/folder");
-});
+fileRouter.post(
+  "/upload",
+  upload.single("uploaded_file"),
+  async function (req, res) {
+    console.log(req.file, req.body);
+    const file = await prisma.file.create({
+      data: {
+        name: req.file.originalname,
+        size: req.file.size,
+        url: req.file.path,
+        ownerID: req.user.id,
+        folderID: parseInt(req.body.folderID),
+      },
+    });
+    res.redirect(`/folder/${req.body.folderID}`);
+  },
+);
 
 export default fileRouter;
