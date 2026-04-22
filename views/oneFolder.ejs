@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Storage Unit | Folder Detail</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -18,6 +19,12 @@
     </header>
     <h1>Folder Detail</h1>
     <form action="/file/upload" enctype="multipart/form-data" method="post">
+      <input
+        type="hidden"
+        id="folderID"
+        name="folderID"
+        value="<%= folder.id %>"
+      />
       <label for="upload">Upload File:</label>
       <input
         type="file"
@@ -26,8 +33,15 @@
         class="upload"
       />
       <input type="text" name="name" id="name" />
-      <input type="hidden" name="<%= folder.id %>" />
       <button type="submit">Upload File</button>
     </form>
+    <main>
+      <h2><%= folder.name %></h2>
+      <% files.forEach((file) => { %>
+    <tr class="file-row">
+        <td class="files"><a class='open-link' href='/file/<%= file.id %>?from=/folder/<%= folder.id %>'><svg class="file-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>file</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg><%= file.name %></a></td>
+    </tr>
+    <% }); %>
+    </main>
   </body>
 </html>

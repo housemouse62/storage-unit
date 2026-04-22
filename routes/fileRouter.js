@@ -33,7 +33,7 @@ fileRouter.post(
   "/upload",
   upload.single("uploaded_file"),
   async function (req, res) {
-    console.log(req.file, req.body);
+    console.log("body body body", req.body);
     const file = await prisma.file.create({
       data: {
         name: req.file.originalname,

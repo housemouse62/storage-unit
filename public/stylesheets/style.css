@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-.folder-icon {
+.folder-icon,
+.file-icon {
   height: 24px;
   color: goldenrod;
 }

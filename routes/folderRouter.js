@@ -16,7 +16,10 @@ folderRouter.get("/:folderID", async (req, res) => {
   const folder = await prisma.folder.findUnique({
     where: { id: parseInt(req.params.folderID) },
   });
-  res.render("oneFolder", { folder: folder });
+  const files = await prisma.file.findMany({
+    where: { folderID: parseInt(req.params.folderID) },
+  });
+  res.render("oneFolder", { folder: folder, files: files });
 });
 
 folderRouter.post("/create", async (req, res) => {
