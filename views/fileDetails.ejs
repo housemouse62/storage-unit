@@ -17,5 +17,12 @@
       </div>
     </header>
     <h1>File Detail</h1>
+    <h2><%= file.name %></h2>
+    <dl>
+      <dt>Size:</dt>
+      <dd><%= formatFileSize(file.size) %></dd>
+      <dt>Uploaded:</dt>
+      <dd><%= file.uploadtime %></dd>
+    </dl>
   </body>
 </html>

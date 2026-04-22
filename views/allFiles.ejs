@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Storage Unit</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -16,6 +17,25 @@
         </nav>
       </div>
     </header>
-    <h1>Files</h1>
+    <h1>All Files</h1>
+    <table>
+        <caption>All Files in the Storage Unit</caption>
+        <thead>
+            <tr>
+                <th scope="col"><span class="visually-hidden">Icon</span></th>
+                <th scope="col">Name</th>
+                <th scope="col">Size</th>
+            </tr>
+        </thead>
+        <tbody>
+    <% files.forEach((file) => { %>
+    <tr class="file-row">
+        <td><a class='open-link' href='/file/<%= file.id %>'><svg class="file-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>file</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg></a></td>
+        <td><a class='open-link' href='/file/<%= file.id %>'><%= file.name %></a></td>
+        <td><%= formatFileSize(file.size) %></td>
+    </tr>
+    <% }); %>
+        </tbody>
+    </table>
   </body>
 </html>

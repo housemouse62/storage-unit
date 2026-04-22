@@ -3,22 +3,18 @@ import { prisma } from "../db/prismaClient.js";
 import checkAuth from "../middleware/auth.js";
 import { check } from "express-validator";
 import multer from "multer";
+import formatFileSize from "../utils/formatFileSize.js";
 const upload = multer({ dest: "./public/uploads" });
 
 const fileRouter = express.Router();
 
 fileRouter.use(checkAuth);
 
-fileRouter.get("/", async (req, res) => {
-  const files = await prisma.file.findMany();
-  res.render("allFiles", { files: files });
-});
-
 fileRouter.get("/:fileID", async (req, res) => {
   const file = await prisma.file.findUnique({
     where: { id: parseInt(req.params.fileID) },
   });
-  res.render("fileDetails", { file: file });
+  res.render("fileDetails", { file: file, formatFileSize: formatFileSize });
 });
 
 fileRouter.patch("/:fileID", async (req, res) => {
@@ -47,4 +43,11 @@ fileRouter.post(
   },
 );
 
+fileRouter.get("/", async (req, res) => {
+  const files = await prisma.file.findMany();
+  res.render("allFiles", {
+    files: files,
+    formatFileSize: formatFileSize,
+  });
+});
 export default fileRouter;

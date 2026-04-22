@@ -1,6 +1,7 @@
 import express from "express";
 import checkAuth from "../middleware/auth.js";
 import { prisma } from "../db/prismaClient.js";
+import formatFileSize from "../utils/formatFileSize.js";
 
 const folderRouter = express.Router();
 
@@ -19,7 +20,11 @@ folderRouter.get("/:folderID", async (req, res) => {
   const files = await prisma.file.findMany({
     where: { folderID: parseInt(req.params.folderID) },
   });
-  res.render("oneFolder", { folder: folder, files: files });
+  res.render("oneFolder", {
+    folder: folder,
+    files: files,
+    formatFileSize: formatFileSize,
+  });
 });
 
 folderRouter.post("/create", async (req, res) => {
