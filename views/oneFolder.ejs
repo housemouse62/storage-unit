@@ -35,8 +35,14 @@
       <input type="text" name="name" id="name" />
       <button type="submit">Upload File</button>
     </form>
+    <div>
+        <form id="edit-form" action="/folder/<%= folder.id %>?_method=PATCH" method="post">
+        <input type="text" name="name" id="folder-input" class="hidden" value="<%= folder.name %>"/>
+        <button id="edit-button" type="button">Edit Folder Name</button>
+        </form>
+    </div>
     <main>
-      <h2><%= folder.name %></h2>
+      <h2 id="folder-title" class="folder-title"><%= folder.name %></h2>
       <table>
         <caption>All Files in the <%= folder.name %> Folder</caption>
         <thead>
@@ -57,5 +63,7 @@
         </tbody>
     </table>
     </main>
+      <script src="/scripts/main.js"></script>
+
   </body>
 </html>
