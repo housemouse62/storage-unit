@@ -24,5 +24,8 @@
       <dt>Uploaded:</dt>
       <dd><%= file.uploadtime %></dd>
     </dl>
+    <form action="<%= file.id %>/download" method="GET">
+      <button type="submit">Download File</button>
+    </form>
   </body>
 </html>

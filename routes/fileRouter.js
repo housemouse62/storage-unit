@@ -25,6 +25,13 @@ fileRouter.patch("/:fileID", async (req, res) => {
   res.render("fileDetails", { file: file });
 });
 
+fileRouter.get("/:fileID/download", async (req, res) => {
+  const file = await prisma.file.findUnique({
+    where: { id: parseInt(req.params.fileID) },
+  });
+  res.download(file.url, file.name);
+});
+
 fileRouter.post(
   "/upload",
   upload.single("uploaded_file"),
@@ -50,4 +57,5 @@ fileRouter.get("/", async (req, res) => {
     formatFileSize: formatFileSize,
   });
 });
+
 export default fileRouter;
