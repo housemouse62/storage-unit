@@ -9,14 +9,14 @@
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="main-header">
-      <div class="logo-nav-form">
-        <nav class="main-nav">
-          <a class="main-links" href="/folder">All Folders</a>
-          <a class="main-links" href="/file">All Files</a>
-          <%- include("../partials/loginLogout.ejs") %>
-        </nav>
-      </div>
+      <img class="small-logo" src="/icons/storage-unit-icon.png" />
+      <nav class="main-nav">
+        <a class="main-links" href="/folder">ALL FOLDERS</a>
+        <a class="main-links" href="/file">ALL FILES</a>
+        <%- include("../partials/loginLogout.ejs") %>
+      </nav>
     </header>
+    <main>
     <h1>Folder Detail</h1>
     <form action="/file/upload" enctype="multipart/form-data" method="post">
       <input
@@ -41,7 +41,11 @@
         <button id="edit-button" type="button">Edit Folder Name</button>
         </form>
     </div>
-    <main>
+    <div>
+        <form id="delete-form" action="/folder/<%= folder.id %>?from=/folder/<%= folder.id %>&_method=DELETE" method="post">
+            <button id="delete-button" type="submit">Delete Folder</button>
+        </form>
+    </div>
       <h2 id="folder-title" class="folder-title"><%= folder.name %></h2>
       <table>
         <caption>All Files in the <%= folder.name %> Folder</caption>
@@ -55,15 +59,15 @@
         <tbody>
     <% files.forEach((file) => { %>
     <tr class="file-row">
-        <td><a class='open-link' href='/file/<%= file.id %>'><svg class="file-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>file</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg></a></td>
-        <td><a class='open-link' href='/file/<%= file.id %>'><%= file.name %></a></td>
+        <td><a class='open-link' href='/file/<%= file.id %>?from=/folder/<%= folder.id %>'><svg class="file-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>file</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg></a></td>
+        <td><a class='open-link' href='/file/<%= file.id %>?from=/folder/<%= folder.id %>'><%= file.name %></a></td>
         <td><%= formatFileSize(file.size) %></td>
     </tr>
     <% }); %>
         </tbody>
     </table>
     </main>
+    <footer>Thought Windows</footer>
       <script src="/scripts/main.js"></script>
-
   </body>
 </html>

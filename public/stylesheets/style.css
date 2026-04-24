@@ -1,7 +1,203 @@
+@font-face {
+  font-family: "oswald";
+  src: url("/fonts/Oswald.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "inter";
+  src: url("/fonts/Inter.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "inter";
+  src: url("/fonts/inter-italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --color-primary: #243746; /* storage blue */
+  --color-secondary: #c44536; /* red */
+  --color-bg: #f5ebdd; /* cream */
+  --color-surface: #ffffff; /* cards */
+  --color-text: #2e2e2e; /* charcoal */
+  --color-accent: #d8a657; /* mustard */
+  --color-success: #4f7a5b; /* green */
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "inter";
+}
+
+body {
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+h1 {
+  font-family: "oswald";
+  font-weight: 700;
+}
+
+h2 {
+  font-family: "oswald";
+  font-weight: 500;
+}
+/* ── Skip Link ── */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 8px 16px;
+  background-color: #2b2b2b;
+  color: #f4e9d8;
+  font-family: "bebas";
+  font-size: 20px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #d9a441;
+  outline-offset: 3px;
+}
+
+/* header */
+
+header {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid black;
+  position: sticky;
+  padding: 10px;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.small-logo {
+  width: 8rem;
+}
+
+.main-nav {
+  display: flex;
+  width: 100%;
+  align-items: end;
+  margin-left: 40px;
+  gap: 40px;
+}
+
+.login-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid var(--color-bg);
+  border-radius: 5px;
+  padding: 10px 16px;
+  margin-right: 40px;
+  background-color: var(--color-secondary);
+}
+
+.login-nav-link {
+  text-decoration: none;
+  color: var(--color-surface);
+  text-transform: uppercase;
+}
+
+.login-nav-link:hover {
+  outline: 1px solid var(--color-surface);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.login-username {
+  font-family: "oswald";
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+.logout-button {
+  background-color: var(--color-bg);
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-family: "inter";
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.logout-button:hover {
+  background-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.main-links {
+  text-decoration: none;
+  background-color: var(--color-secondary);
+  color: var(--color-surface);
+  border: 1px solid var(--color-surface);
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.main-links:hover {
+  background-color: var(--color-accent);
+}
+
+.main-links:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* main */
+main {
+  padding: 10px;
+}
+/* folders */
+.visually-hidden {
+  display: none;
+}
+
+table {
+  margin: 10px 0 20px;
+}
+
+th {
+  text-align: left;
+}
+
+td,
+th {
+  padding-left: 5px;
+}
+
+table caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .folder-icon,
@@ -16,4 +212,14 @@
 
 #folder-title.hidden {
   display: none;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  font-family: "inter";
+  font-style: italic;
+  font-size: 1.15rem;
+  border: 1px solid black;
+  padding: 5px;
 }

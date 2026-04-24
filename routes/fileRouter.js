@@ -14,7 +14,7 @@ fileRouter.get("/:fileID", async (req, res) => {
   const file = await prisma.file.findUnique({
     where: { id: parseInt(req.params.fileID) },
   });
-  res.render("fileDetails", { file: file, formatFileSize: formatFileSize });
+  res.render("fileDetails", { file: file, formatFileSize: formatFileSize, from: req.query.from || "/file" });
 });
 
 fileRouter.patch("/:fileID", async (req, res) => {
@@ -23,6 +23,13 @@ fileRouter.patch("/:fileID", async (req, res) => {
     data: { folderID: req.body.folderID },
   });
   res.render("fileDetails", { file: file });
+});
+
+fileRouter.delete("/:fileID", async (req, res) => {
+  await prisma.file.delete({
+    where: { id: parseInt(req.params.fileID) },
+  });
+  res.redirect(req.body.from || "/file");
 });
 
 fileRouter.get("/:fileID/download", async (req, res) => {

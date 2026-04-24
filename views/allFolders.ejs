@@ -4,28 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Storage Unit</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">  </head>
+    <link rel="stylesheet" href="/stylesheets/style.css">
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="main-header">
-      <div class="logo-nav-form">
-        <nav class="main-nav">
-          <a class="main-links" href="/folder">All Folders</a>
-          <a class="main-links" href="/file">All Files</a>
-          <%- include("../partials/loginLogout.ejs") %>
-        </nav>
-      </div>
+      <img class="small-logo" src="/icons/storage-unit-icon.png" />
+      <nav class="main-nav">
+        <a class="main-links" href="/folder">ALL FOLDERS</a>
+        <a class="main-links" href="/file">ALL FILES</a>
+        <%- include("../partials/loginLogout.ejs") %>
+      </nav>
     </header>
-    <h1>Folders</h1>
-    <form action="/folder/create" method="post">
+    <main>
+    <h1>All Folders</h1>
+    <table>
+        <caption>All Folders is the Storage Unit</caption>
+        <thead>
+            <tr>
+                <th scope="col"><span class="visually-hidden">Icon</span></th>
+                <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% folders.forEach((folder) => { %>
+            <tr class="folder-row">
+                <td><a class='open-link' href='/folder/<%= folder.id %>'><svg class="folder-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>folder</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg></a></td>
+                <td class="row-name"><a class='open-link' href='/folder/<%= folder.id %>'><%= folder.name %></a></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <form class="new-folder-form" action="/folder/create" method="post">
       <label for="name">Create New Folder</label>
       <input type="text" name="name" id="name" placeholder="Folder Name" />
       <button type="submit">Create</button>
     </form>
-    <% folders.forEach((folder) => { %>
-    <tr class="folder-row">
-        <td class="folder"><a class='open-link' href='/folder/<%= folder.id %>?from=/folder/<%= folder.id %>'><svg class="folder-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>folder</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg><%= folder.name %></a></td>
-    </tr>
-    <% }); %>
+    </main>
+    <footer>Thought Windows
+    </footer>
   </body>
 </html>

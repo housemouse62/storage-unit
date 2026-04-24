@@ -9,33 +9,35 @@
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="main-header">
-      <div class="logo-nav-form">
-        <nav class="main-nav">
-          <a class="main-links" href="/folder">All Folders</a>
-          <a class="main-links" href="/file">All Files</a>
-          <%- include("../partials/loginLogout.ejs") %>
-        </nav>
-      </div>
+      <a href="/"><img class="small-logo" src="/icons/storage-unit-icon.png" /></a>
+      <nav class="main-nav">
+        <a class="main-links" href="/folder">ALL FOLDERS</a>
+        <a class="main-links" href="/file">ALL FILES</a>
+        <%- include("../partials/loginLogout.ejs") %>
+      </nav>
     </header>
-    <h1>All Files</h1>
-    <table>
-        <caption>All Files in the Storage Unit</caption>
-        <thead>
-            <tr>
-                <th scope="col"><span class="visually-hidden">Icon</span></th>
-                <th scope="col">Name</th>
-                <th scope="col">Size</th>
-            </tr>
-        </thead>
-        <tbody>
-    <% files.forEach((file) => { %>
-    <tr class="file-row">
-        <td><a class='open-link' href='/file/<%= file.id %>'><svg class="file-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>file</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg></a></td>
-        <td><a class='open-link' href='/file/<%= file.id %>'><%= file.name %></a></td>
-        <td><%= formatFileSize(file.size) %></td>
-    </tr>
-    <% }); %>
-        </tbody>
-    </table>
+    <main>
+        <h1>All Files</h1>
+        <table>
+            <caption>All Files in the Storage Unit</caption>
+            <thead>
+                <tr>
+                    <th scope="col"><span class="visually-hidden">Icon</span></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% files.forEach((file) => { %>
+                <tr class="file-row">
+                    <td><a class='open-link' href='/file/<%= file.id %>?from=/file'><svg class="file-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>file</title><path d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" /></svg></a></td>
+                    <td class="row-name"><a class='open-link' href='/file/<%= file.id %>?from=/file'><%= file.name %></a></td>
+                    <td><%= formatFileSize(file.size) %></td>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    </main>
+    <footer>Thought Windows</footer>
   </body>
 </html>

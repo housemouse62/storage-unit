@@ -4,17 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Storage Unit | Logged Out</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="main-header">
-      <div class="logo-nav-form">
-        <nav class="main-nav">
-          <a class="main-links" href="/folder">All Folders</a>
-          <a class="main-links" href="/file">All Files</a>
-          <%- include("../partials/loginLogout.ejs") %>
-        </nav>
-      </div>
+      <img class="small-logo" src="/icons/storage-unit-icon.png" />
+      <nav class="main-nav">
+        <a class="main-links" href="/folder">ALL FOLDERS</a>
+        <a class="main-links" href="/file">ALL FILES</a>
+        <%- include("../partials/loginLogout.ejs") %>
+      </nav>
+    </header>
     </header>
     <h1>Logged Out</h1>
   </body>
