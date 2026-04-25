@@ -4,6 +4,7 @@ import checkAuth from "../middleware/auth.js";
 import { check } from "express-validator";
 import multer from "multer";
 import formatFileSize from "../utils/formatFileSize.js";
+import formatDate from "../utils/formatDate.js";
 const upload = multer({ dest: "./public/uploads" });
 
 const fileRouter = express.Router();
@@ -14,7 +15,7 @@ fileRouter.get("/:fileID", async (req, res) => {
   const file = await prisma.file.findUnique({
     where: { id: parseInt(req.params.fileID) },
   });
-  res.render("fileDetails", { file: file, formatFileSize: formatFileSize, from: req.query.from || "/file" });
+  res.render("fileDetails", { file: file, formatFileSize: formatFileSize, formatDate: formatDate, from: req.query.from || "/file" });
 });
 
 fileRouter.patch("/:fileID", async (req, res) => {

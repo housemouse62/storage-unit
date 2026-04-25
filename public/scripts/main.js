@@ -15,3 +15,10 @@ const toggle = () => {
 };
 
 editButton.addEventListener("click", toggle);
+
+const fileInput = document.getElementById("uploaded_file");
+const fileNameDisplay = document.getElementById("file-name");
+
+fileInput.addEventListener("change", () => {
+  fileNameDisplay.textContent = fileInput.files[0]?.name || "No file chosen";
+});

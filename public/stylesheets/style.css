@@ -46,6 +46,10 @@ body {
   grid-template-rows: auto 1fr auto;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
 h1 {
   font-family: "oswald";
   font-weight: 700;
@@ -185,7 +189,12 @@ th {
 
 td,
 th {
-  padding-left: 5px;
+  padding-left: 1rem;
+}
+
+td:nth-child(3),
+th:nth-child(3) {
+  padding-left: 3rem;
 }
 
 table caption {
@@ -214,6 +223,111 @@ table caption {
   display: none;
 }
 
+/* file details */
+dl {
+  display: grid;
+  grid-template-columns: max-content auto;
+  margin: 0.5rem 0 2.5rem 1.5rem;
+  line-height: 2rem;
+}
+
+dt {
+  grid-column-start: 1;
+}
+
+dd {
+  grid-column-start: 2;
+  margin-left: 1.5rem;
+}
+
+.file-button-div {
+  display: flex;
+  gap: 1rem;
+}
+
+.file-button {
+  background-color: var(--color-bg);
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-family: "inter";
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.file-button.download-button:hover {
+  background-color: var(--color-accent);
+  cursor: pointer;
+}
+.file-button.delete-button:hover {
+  background-color: var(--color-secondary);
+  cursor: pointer;
+}
+
+/* one folder */
+.folder-info-div {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  margin-left: 1rem;
+}
+.file-upload-div {
+  display: flex;
+  margin: 0 0 0 1.5rem;
+}
+
+.file-form input,
+.file-form label {
+  margin-left: 1.5rem;
+}
+
+.file-form span {
+  font-weight: 300;
+  margin-left: 1.5rem;
+}
+
+.choose-file,
+.upload-file {
+  background-color: var(--color-bg);
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-family: "inter";
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.choose-file:hover,
+.upload-file:hover {
+  background-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.folder-button {
+  background-color: var(--color-bg);
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-family: "inter";
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+#edit-button:hover {
+  background-color: var(--color-accent);
+  cursor: pointer;
+}
+#delete-button:hover {
+  background-color: var(--color-secondary);
+  cursor: pointer;
+}
+
+#folder-input {
+  height: 2rem;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 1.25rem;
+}
+/* footer */
 footer {
   display: flex;
   justify-content: center;
