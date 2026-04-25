@@ -68,7 +68,9 @@
           <input type="text" name="name" id="name" placeholder="New File Name?"/>
           <button class="upload-file" type="submit">Upload File</button>
         </form>
-      
+  </div>
+  <div class="size-error-div">
+    <%= error ? 'File exceeds 4MB size limit.' : '' %>
   </div>
     </main>
     <footer>Thought Windows</footer>

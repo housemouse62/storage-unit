@@ -326,6 +326,12 @@ dd {
   padding: 5px;
   border-radius: 5px;
   font-size: 1.25rem;
+  margin-right: 1rem;
+}
+
+.size-error-div {
+  display: flex;
+  margin: 1rem 0 0 12rem;
 }
 /* footer */
 footer {

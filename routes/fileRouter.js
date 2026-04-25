@@ -5,7 +5,10 @@ import { check } from "express-validator";
 import multer from "multer";
 import formatFileSize from "../utils/formatFileSize.js";
 import formatDate from "../utils/formatDate.js";
-const upload = multer({ dest: "./public/uploads" });
+const upload = multer({
+  dest: "./public/uploads",
+  limits: { fileSize: 4 * 1024 * 1024 },
+});
 
 const fileRouter = express.Router();
 
@@ -15,7 +18,12 @@ fileRouter.get("/:fileID", async (req, res) => {
   const file = await prisma.file.findUnique({
     where: { id: parseInt(req.params.fileID) },
   });
-  res.render("fileDetails", { file: file, formatFileSize: formatFileSize, formatDate: formatDate, from: req.query.from || "/file" });
+  res.render("fileDetails", {
+    file: file,
+    formatFileSize: formatFileSize,
+    formatDate: formatDate,
+    from: req.query.from || "/file",
+  });
 });
 
 fileRouter.patch("/:fileID", async (req, res) => {
@@ -40,11 +48,12 @@ fileRouter.get("/:fileID/download", async (req, res) => {
   res.download(file.url, file.name);
 });
 
-fileRouter.post(
-  "/upload",
-  upload.single("uploaded_file"),
-  async function (req, res) {
-    console.log("body body body", req.body);
+fileRouter.post("/upload", async function (req, res) {
+  upload.single("uploaded_file")(req, res, async (err) => {
+    if (err) {
+      res.redirect(`/folder/${req.body.folderID}?error=size`);
+      return;
+    }
     const file = await prisma.file.create({
       data: {
         name: req.file.originalname,
@@ -55,8 +64,8 @@ fileRouter.post(
       },
     });
     res.redirect(`/folder/${req.body.folderID}`);
-  },
-);
+  });
+});
 
 fileRouter.get("/", async (req, res) => {
   const files = await prisma.file.findMany();

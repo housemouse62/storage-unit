@@ -22,3 +22,12 @@ const fileNameDisplay = document.getElementById("file-name");
 fileInput.addEventListener("change", () => {
   fileNameDisplay.textContent = fileInput.files[0]?.name || "No file chosen";
 });
+
+const fileValidation = () => {
+  const fi = document.getElementById("uploaded_file");
+  console.log(fi.files[0].size);
+  if (fi.files[0].size > 4000001) {
+    alert("File too BIG, files can be no larger than 4MB");
+    return;
+  }
+};

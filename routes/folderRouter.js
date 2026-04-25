@@ -30,6 +30,7 @@ folderRouter.get("/:folderID", async (req, res) => {
     folder: folder,
     files: files,
     formatFileSize: formatFileSize,
+    error: req.query.error,
   });
 });
 
