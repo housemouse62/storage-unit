@@ -70,7 +70,8 @@
         </form>
   </div>
   <div class="size-error-div">
-    <%= error ? 'File exceeds 4MB size limit.' : '' %>
+    <%= error === 'size' ? 'File exceeds 4MB size limit.' : '' %>
+    <%= error === 'filetype' ? 'Filetype not allowed. No .zip or .exe allowed.' : '' %>
   </div>
     </main>
     <footer>Thought Windows</footer>

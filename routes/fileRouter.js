@@ -6,6 +6,9 @@ import multer from "multer";
 import formatFileSize from "../utils/formatFileSize.js";
 import formatDate from "../utils/formatDate.js";
 import cloudinary from "../config/cloudinary.js";
+import { fileTypeFromBuffer, fileTypeFromFile } from "file-type";
+import uploadToCloudinary from "../config/upload.js";
+import { fileValidation } from "../middleware/fileValidation.js";
 
 cloudinary.config({
   cloud_name: "dhslickhz",
@@ -13,8 +16,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const storage = multer.memoryStorage();
 const upload = multer({
-  dest: "./public/uploads",
+  storage: storage,
   limits: { fileSize: 4 * 1024 * 1024 },
 });
 
@@ -62,25 +66,35 @@ fileRouter.post("/upload", async function (req, res) {
       res.redirect(`/folder/${req.body.folderID}?error=size`);
       return;
     }
-    try {
-      // Upload the image
-      const result = await cloudinary.uploader.upload(req.file.path);
-      console.log(result);
-      const file = await prisma.file.create({
-        data: {
-          name: req.file.originalname,
-          size: req.file.size,
-          url: result.secure_url,
-          ownerID: req.user.id,
-          folderID: parseInt(req.body.folderID),
-        },
-      });
-      console.log(result);
+    fileValidation(req, res, async (validationErr) => {
+      if (validationErr) {
+        res.redirect(`/folder/${req.body.folderID}?error=filetype`);
+        // handle errors
+        return;
+      }
+      try {
+        // Upload the image
+        const file_info = await fileTypeFromBuffer(req.file.buffer);
+        const file_type = file_info.ext;
+        console.log("file_type", file_type);
+        const new_file = await uploadToCloudinary(req.file.buffer);
+        console.log("new_file", new_file);
+        const file = await prisma.file.create({
+          data: {
+            name: req.file.originalname,
+            size: req.file.size,
+            url: new_file.secure_url,
+            ownerID: req.user.id,
+            folderID: parseInt(req.body.folderID),
+            filetype: file_type,
+          },
+        });
 
-      res.redirect(`/folder/${req.body.folderID}`);
-    } catch (error) {
-      console.error(error);
-    }
+        res.redirect(`/folder/${req.body.folderID}`);
+      } catch (error) {
+        console.error(error);
+      }
+    });
   });
 });
 

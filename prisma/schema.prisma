@@ -30,9 +30,10 @@ model Folder {
   SharedLinks ShareLink[]
 }
 
-model File {
+model File { 
   id          Int     @id @default(autoincrement())
   name        String
+  filetype    String? 
   size        Int
   url         String?
   uploadtime  DateTime  @default(now())
@@ -44,11 +45,11 @@ model File {
 }
 
 model ShareLink {
-  id            String      @id @default(uuid())
+  id            String    @id @default(uuid())
   folder        Folder?   @relation(fields: [folderID], references: [id])
   folderID      Int?
   file          File?     @relation(fields: [fileID], references: [id])
-  fileID        Int?
+  fileID        Int?   
   createdAt     DateTime  @default(now())
   availableFor  Int
 }
