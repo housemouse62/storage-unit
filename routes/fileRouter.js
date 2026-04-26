@@ -5,6 +5,14 @@ import { check } from "express-validator";
 import multer from "multer";
 import formatFileSize from "../utils/formatFileSize.js";
 import formatDate from "../utils/formatDate.js";
+import cloudinary from "../config/cloudinary.js";
+
+cloudinary.config({
+  cloud_name: "dhslickhz",
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 const upload = multer({
   dest: "./public/uploads",
   limits: { fileSize: 4 * 1024 * 1024 },
@@ -54,16 +62,25 @@ fileRouter.post("/upload", async function (req, res) {
       res.redirect(`/folder/${req.body.folderID}?error=size`);
       return;
     }
-    const file = await prisma.file.create({
-      data: {
-        name: req.file.originalname,
-        size: req.file.size,
-        url: req.file.path,
-        ownerID: req.user.id,
-        folderID: parseInt(req.body.folderID),
-      },
-    });
-    res.redirect(`/folder/${req.body.folderID}`);
+    try {
+      // Upload the image
+      const result = await cloudinary.uploader.upload(req.file.path);
+      console.log(result);
+      const file = await prisma.file.create({
+        data: {
+          name: req.file.originalname,
+          size: req.file.size,
+          url: result.secure_url,
+          ownerID: req.user.id,
+          folderID: parseInt(req.body.folderID),
+        },
+      });
+      console.log(result);
+
+      res.redirect(`/folder/${req.body.folderID}`);
+    } catch (error) {
+      console.error(error);
+    }
   });
 });
 
