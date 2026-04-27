@@ -3,6 +3,8 @@ import passport from "passport";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import { prisma } from "../db/prismaClient.js";
+import rateLimit from "express-rate-limit";
+const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 10 });
 
 const userRouter = express.Router();
 
@@ -24,6 +26,7 @@ userRouter.get("/login", (req, res, next) => {
 
 userRouter.post(
   "/login",
+  authLimiter,
   passport.authenticate("local", {
     successRedirect: "/folder",
     failureRedirect: "/login",
@@ -40,6 +43,7 @@ userRouter.get("/createUser", (req, res, next) => {
 
 userRouter.post(
   "/createUser",
+  authLimiter,
   body("confirmPassword").custom((value, { req }) => {
     const match = value === req.body.password;
     if (!match) throw new Error("Passwords do not match.");
