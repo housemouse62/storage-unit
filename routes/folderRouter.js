@@ -63,15 +63,16 @@ folderRouter.patch("/:folderID", async (req, res, next) => {
     if (!name) {
       return res.redirect(`/folder/${req.params.folderID}?error=name`);
     }
+    const folderID = parseInt(req.params.folderID);
+    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+
     const folder = await prisma.folder.update({
-      where: { id: parseInt(req.params.folderID) },
+      where: { id: folderID },
       data: { name: name },
     });
-    console.log("req.params.folderID", req.params.folderID);
     const files = await prisma.file.findMany({
-      where: { folderID: parseInt(req.params.folderID) },
+      where: { folderID: folderID },
     });
-    console.log(folder);
     res.render("oneFolder", {
       folder: folder,
       files: files,

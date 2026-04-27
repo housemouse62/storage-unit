@@ -24,22 +24,24 @@
             <h1 class="login">Log In</h1>
           </div>
           <div class="form-field">
-            <label for="email" class="login-label">E-mail</label>
+            <label for="email" class="login-label">E-mail:</label>
             <input
               type="email"
               name="email"
               id="email"
+              class="login-field"
               placeholder="E-mail Address"
               value="<% locals.formData?.email || '' %>"
               required
             />
           </div>
           <div class="form-field">
-            <label for="password" class="login-label">Password</label>
+            <label for="password" class="login-label">Password:</label>
             <input
               type="password"
               name="password"
               id="password"
+              class="login-field"
               placeholder="Password"
               autocomplete="current-password"
               required
@@ -48,6 +50,9 @@
         </div>
         <button type="submit" class="login-button">Log In</button>
       </form>
+      <% if (error) { %>
+        <p class="error" aria-live="polite"><%= error %></p>
+      <% } %>
     </main>
   </body>
 </html>

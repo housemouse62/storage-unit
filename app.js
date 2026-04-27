@@ -14,6 +14,7 @@ import folderRouter from "./routes/folderRouter.js";
 import userRouter from "./routes/userRouter.js";
 import shareRouter from "./routes/shareRouter.js";
 import formatDate from "./utils/formatDate.js";
+import flash from "connect-flash";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,6 +44,7 @@ app.use(
   }),
 );
 
+app.use(flash());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
@@ -68,13 +70,11 @@ app.use("/file", fileRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res
-    .status(500)
-    .render("errorPage", {
-      error: err.message,
-      formatDate: formatDate,
-      user: req.user || false,
-    });
+  res.status(500).render("errorPage", {
+    error: err.message,
+    formatDate: formatDate,
+    user: req.user || false,
+  });
 });
 
 const PORT = process.env.PORT || 3000;

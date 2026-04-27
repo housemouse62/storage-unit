@@ -10,12 +10,6 @@ import { fileTypeFromBuffer, fileTypeFromFile } from "file-type";
 import uploadToCloudinary from "../config/upload.js";
 import { fileValidation } from "../middleware/fileValidation.js";
 
-cloudinary.config({
-  cloud_name: "dhslickhz",
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
 const storage = multer.memoryStorage();
 const upload = multer({
   storage: storage,
@@ -28,8 +22,11 @@ fileRouter.use(checkAuth);
 
 fileRouter.get("/:fileID", async (req, res, next) => {
   try {
+    const fileID = parseInt(req.params.fileID);
+    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+
     const file = await prisma.file.findUnique({
-      where: { id: parseInt(req.params.fileID) },
+      where: { id: fileID },
     });
     res.render("fileDetails", {
       file: file,
@@ -44,8 +41,11 @@ fileRouter.get("/:fileID", async (req, res, next) => {
 
 fileRouter.patch("/:fileID", async (req, res, next) => {
   try {
+    const fileID = parseInt(req.params.fileID);
+    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+
     const file = await prisma.file.update({
-      where: { id: parseInt(req.params.fileID) },
+      where: { id: fileID },
       data: { folderID: req.body.folderID },
     });
     res.render("fileDetails", { file: file });
@@ -56,8 +56,11 @@ fileRouter.patch("/:fileID", async (req, res, next) => {
 
 fileRouter.delete("/:fileID", async (req, res, next) => {
   try {
+    const fileID = parseInt(req.params.fileID);
+    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+
     await prisma.file.delete({
-      where: { id: parseInt(req.params.fileID) },
+      where: { id: fileID },
     });
     res.redirect(req.body.from || "/file");
   } catch (err) {
@@ -67,8 +70,11 @@ fileRouter.delete("/:fileID", async (req, res, next) => {
 
 fileRouter.get("/:fileID/download", async (req, res, next) => {
   try {
+    const fileID = parseInt(req.params.fileID);
+    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+
     const file = await prisma.file.findUnique({
-      where: { id: parseInt(req.params.fileID) },
+      where: { id: fileID },
     });
     res.download(file.url, file.name);
   } catch (err) {
@@ -93,9 +99,7 @@ fileRouter.post("/upload", async function (req, res, next) {
           // Upload the image
           const file_info = await fileTypeFromBuffer(req.file.buffer);
           const file_type = file_info.ext;
-          console.log("file_type", file_type);
           const new_file = await uploadToCloudinary(req.file.buffer);
-          console.log("new_file", new_file);
           const file = await prisma.file.create({
             data: {
               name: req.file.originalname,

@@ -18,7 +18,7 @@ userRouter.get("/", (req, res, next) => {
 
 userRouter.get("/login", (req, res, next) => {
   try {
-    res.render("loginPage");
+    res.render("loginPage", { error: req.flash("error")[0] });
   } catch (err) {
     next(err);
   }
@@ -30,6 +30,7 @@ userRouter.post(
   passport.authenticate("local", {
     successRedirect: "/folder",
     failureRedirect: "/login",
+    failureFlash: true,
   }),
 );
 
@@ -45,7 +46,8 @@ userRouter.post(
   "/createUser",
   authLimiter,
   body("confirmEmail").custom((value, { req }) => {
-    if (value !== req.body.email) throw new Error("Email addresses do not match.");
+    if (value !== req.body.email)
+      throw new Error("Email addresses do not match.");
     return true;
   }),
   body("confirmPassword").custom((value, { req }) => {

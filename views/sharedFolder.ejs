@@ -20,6 +20,7 @@
     <h1>Share Folder</h1>
     <div class="folder-info-div">
       <h2 id="folder-title" class="folder-title"><%= folder.name %></h2>
+      <p><b>This share link expires on <%= formatDate(expiredAt) %></b></p>
     </div>
       <table>
         <caption>All Files in the <%= folder.name %> Folder</caption>

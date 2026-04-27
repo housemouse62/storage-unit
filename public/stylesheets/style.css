@@ -59,6 +59,10 @@ h2 {
   font-family: "oswald";
   font-weight: 500;
 }
+
+.error {
+  margin: 1rem;
+}
 /* ── Skip Link ── */
 
 .skip-link {
@@ -186,10 +190,23 @@ main {
 
 /* login page, create user page */
 .login-label {
+  font-size: 1.2rem;
   margin-right: 1rem;
+  font-weight: 700;
 }
 .form-field {
+  width: 28%;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
   margin: 1rem;
+}
+
+.login-field {
+  height: 1.7rem;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.9rem;
 }
 
 .login-button,

@@ -8,11 +8,14 @@ const shareRouter = express.Router();
 
 shareRouter.get("/folder/:folderID", checkAuth, async (req, res, next) => {
   try {
+    const folderID = parseInt(req.params.folderID);
+    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+
     const folder = await prisma.folder.findUnique({
-      where: { id: parseInt(req.params.folderID) },
+      where: { id: folderID },
     });
     const files = await prisma.file.findMany({
-      where: { folderID: parseInt(req.params.folderID) },
+      where: { folderID: folderID },
     });
     res.render("shareFolder", {
       folder: folder,
@@ -26,11 +29,14 @@ shareRouter.get("/folder/:folderID", checkAuth, async (req, res, next) => {
 
 shareRouter.post("/folder/:folderID", checkAuth, async (req, res, next) => {
   try {
+    const folderID = parseInt(req.params.folderID);
+    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+
     const folder = await prisma.folder.findUnique({
-      where: { id: parseInt(req.params.folderID) },
+      where: { id: folderID },
     });
     const files = await prisma.file.findMany({
-      where: { folderID: parseInt(req.params.folderID) },
+      where: { folderID: folderID },
     });
     const days = parseInt(req.body.availableFor);
     if (isNaN(days) || days < 1 || days > 365) {
@@ -40,9 +46,12 @@ shareRouter.post("/folder/:folderID", checkAuth, async (req, res, next) => {
         error: "Duration must be between 1 and 365 days",
       });
     }
+    const folderID = parseInt(req.params.folderID);
+    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+
     const shareLink = await prisma.shareLink.create({
       data: {
-        folderID: parseInt(req.params.folderID),
+        folderID: folderID,
         availableFor: days,
       },
     });
@@ -98,6 +107,7 @@ shareRouter.get("/:shareID", async (req, res, next) => {
         files: files,
         formatFileSize: formatFileSize,
         formatDate: formatDate,
+        expiredAt: expiredAt,
       });
     }
   } catch (err) {
