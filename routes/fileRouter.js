@@ -26,84 +26,108 @@ const fileRouter = express.Router();
 
 fileRouter.use(checkAuth);
 
-fileRouter.get("/:fileID", async (req, res) => {
-  const file = await prisma.file.findUnique({
-    where: { id: parseInt(req.params.fileID) },
-  });
-  res.render("fileDetails", {
-    file: file,
-    formatFileSize: formatFileSize,
-    formatDate: formatDate,
-    from: req.query.from || "/file",
-  });
+fileRouter.get("/:fileID", async (req, res, next) => {
+  try {
+    const file = await prisma.file.findUnique({
+      where: { id: parseInt(req.params.fileID) },
+    });
+    res.render("fileDetails", {
+      file: file,
+      formatFileSize: formatFileSize,
+      formatDate: formatDate,
+      from: req.query.from || "/file",
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
-fileRouter.patch("/:fileID", async (req, res) => {
-  const file = await prisma.file.update({
-    where: { id: parseInt(req.params.fileID) },
-    data: { folderID: req.body.folderID },
-  });
-  res.render("fileDetails", { file: file });
+fileRouter.patch("/:fileID", async (req, res, next) => {
+  try {
+    const file = await prisma.file.update({
+      where: { id: parseInt(req.params.fileID) },
+      data: { folderID: req.body.folderID },
+    });
+    res.render("fileDetails", { file: file });
+  } catch (err) {
+    next(err);
+  }
 });
 
-fileRouter.delete("/:fileID", async (req, res) => {
-  await prisma.file.delete({
-    where: { id: parseInt(req.params.fileID) },
-  });
-  res.redirect(req.body.from || "/file");
+fileRouter.delete("/:fileID", async (req, res, next) => {
+  try {
+    await prisma.file.delete({
+      where: { id: parseInt(req.params.fileID) },
+    });
+    res.redirect(req.body.from || "/file");
+  } catch (err) {
+    next(err);
+  }
 });
 
-fileRouter.get("/:fileID/download", async (req, res) => {
-  const file = await prisma.file.findUnique({
-    where: { id: parseInt(req.params.fileID) },
-  });
-  res.download(file.url, file.name);
+fileRouter.get("/:fileID/download", async (req, res, next) => {
+  try {
+    const file = await prisma.file.findUnique({
+      where: { id: parseInt(req.params.fileID) },
+    });
+    res.download(file.url, file.name);
+  } catch (err) {
+    next(err);
+  }
 });
 
-fileRouter.post("/upload", async function (req, res) {
-  upload.single("uploaded_file")(req, res, async (err) => {
-    if (err) {
-      res.redirect(`/folder/${req.body.folderID}?error=size`);
-      return;
-    }
-    fileValidation(req, res, async (validationErr) => {
-      if (validationErr) {
-        res.redirect(`/folder/${req.body.folderID}?error=filetype`);
-        // handle errors
+fileRouter.post("/upload", async function (req, res, next) {
+  try {
+    upload.single("uploaded_file")(req, res, async (err) => {
+      if (err) {
+        res.redirect(`/folder/${req.body.folderID}?error=size`);
         return;
       }
-      try {
-        // Upload the image
-        const file_info = await fileTypeFromBuffer(req.file.buffer);
-        const file_type = file_info.ext;
-        console.log("file_type", file_type);
-        const new_file = await uploadToCloudinary(req.file.buffer);
-        console.log("new_file", new_file);
-        const file = await prisma.file.create({
-          data: {
-            name: req.file.originalname,
-            size: req.file.size,
-            url: new_file.secure_url,
-            ownerID: req.user.id,
-            folderID: parseInt(req.body.folderID),
-            filetype: file_type,
-          },
-        });
+      fileValidation(req, res, async (validationErr) => {
+        if (validationErr) {
+          res.redirect(`/folder/${req.body.folderID}?error=filetype`);
+          // handle errors
+          return;
+        }
+        try {
+          // Upload the image
+          const file_info = await fileTypeFromBuffer(req.file.buffer);
+          const file_type = file_info.ext;
+          console.log("file_type", file_type);
+          const new_file = await uploadToCloudinary(req.file.buffer);
+          console.log("new_file", new_file);
+          const file = await prisma.file.create({
+            data: {
+              name: req.file.originalname,
+              size: req.file.size,
+              url: new_file.secure_url,
+              ownerID: req.user.id,
+              folderID: parseInt(req.body.folderID),
+              filetype: file_type,
+            },
+          });
 
-        res.redirect(`/folder/${req.body.folderID}`);
-      } catch (error) {
-        console.error(error);
-      }
+          res.redirect(`/folder/${req.body.folderID}`);
+        } catch (error) {
+          console.error(error);
+        }
+      });
     });
-  });
+  } catch (err) {
+    next(err);
+  }
 });
 
-fileRouter.get("/", async (req, res) => {
-  const files = await prisma.file.findMany();
-  res.render("allFiles", {
-    files: files,
-    formatFileSize: formatFileSize,
-  });
+fileRouter.get("/", async (req, res, next) => {
+  try {
+    const files = await prisma.file.findMany();
+    res.render("allFiles", {
+      files: files,
+      formatFileSize: formatFileSize,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default fileRouter;

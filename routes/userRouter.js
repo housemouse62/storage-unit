@@ -6,12 +6,20 @@ import { prisma } from "../db/prismaClient.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/", (req, res) => {
-  res.render("index");
+userRouter.get("/", (req, res, next) => {
+  try {
+    res.render("index");
+  } catch (err) {
+    next(err);
+  }
 });
 
-userRouter.get("/login", (req, res) => {
-  res.render("loginPage");
+userRouter.get("/login", (req, res, next) => {
+  try {
+    res.render("loginPage");
+  } catch (err) {
+    next(err);
+  }
 });
 
 userRouter.post(
@@ -22,8 +30,12 @@ userRouter.post(
   }),
 );
 
-userRouter.get("/createUser", (req, res) => {
-  res.render("createUserPage");
+userRouter.get("/createUser", (req, res, next) => {
+  try {
+    res.render("createUserPage");
+  } catch (err) {
+    next(err);
+  }
 });
 
 userRouter.post(
@@ -68,16 +80,24 @@ userRouter.post(
 );
 
 userRouter.post("/logOut", (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
+  try {
+    req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
-userRouter.get("/loggedOut", (req, res) => {
-  res.render("loggedOutPage");
+userRouter.get("/loggedOut", (req, res, next) => {
+  try {
+    res.render("loggedOutPage");
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default userRouter;
