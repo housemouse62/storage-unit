@@ -3,13 +3,13 @@
 ## Critical
 
 - [x] Add CSRF protection to all forms (`csrf-csrf`)
-- [ ] Add rate limiting to `/login` and `/createUser` (`express-rate-limit`)
+- [x] Add rate limiting to `/login` and `/createUser` (`express-rate-limit`)
 - [x] Remove duplicate bcrypt package — keep `bcryptjs`, remove `bcrypt` from package.json
 
 ## High
 
-- [ ] Uncomment error display in `createUserPage.ejs` — validation errors are never shown to users
-- [ ] Add email validation on user registration (`express-validator` is installed, just unused for email)
+- [x] Uncomment error display in `createUserPage.ejs` — validation errors are never shown to users
+- [x] Add email validation on user registration (`express-validator` is installed, just unused for email)
 - [ ] Validate share duration input — reject 0, negative numbers, and unreasonably large values
 - [ ] Validate folder names — reject empty strings on create and rename
 

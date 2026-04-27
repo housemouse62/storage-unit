@@ -192,7 +192,8 @@ main {
   margin: 1rem;
 }
 
-.login-button {
+.login-button,
+.create-button {
   background-color: var(--color-bg);
   padding: 4px 8px;
   border: 1px solid black;
@@ -202,11 +203,19 @@ main {
   font-weight: 500;
 }
 
-.login-button:hover {
+.login-button:hover,
+.create-button:hover {
   background-color: var(--color-accent);
   cursor: pointer;
 }
 
+.create-button {
+  margin-top: 1rem;
+}
+
+error-create-button-div {
+  margin-left: 4rem;
+}
 /* folders */
 .visually-hidden {
   display: none;

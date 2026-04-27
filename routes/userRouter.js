@@ -44,17 +44,19 @@ userRouter.get("/createUser", (req, res, next) => {
 userRouter.post(
   "/createUser",
   authLimiter,
+  body("confirmEmail").custom((value, { req }) => {
+    if (value !== req.body.email) throw new Error("Email addresses do not match.");
+    return true;
+  }),
   body("confirmPassword").custom((value, { req }) => {
-    const match = value === req.body.password;
-    if (!match) throw new Error("Passwords do not match.");
+    if (value !== req.body.password) throw new Error("Passwords do not match.");
     return true;
   }),
   async (req, res, next) => {
-    const passwordErrors = validationResult(req);
-    console.log(passwordErrors.array());
-    if (!passwordErrors.isEmpty()) {
+    const formErrors = validationResult(req);
+    if (!formErrors.isEmpty()) {
       const passwordErrorPayload = {
-        passwordErrors: passwordErrors.array(),
+        passwordErrors: formErrors.array(),
         formData: req.body,
       };
 

@@ -5,6 +5,7 @@
       <span class="login-username"><%= user.name %></span>
     </span>
     <form method="POST" action="/logout">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button type="submit" class="logout-button">LOG OUT</button>
     </form>
   <% } else { %>

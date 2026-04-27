@@ -48,6 +48,17 @@
             />
           </div>
           <div class="form-field">
+            <label for="confirmEmail">Confirm Email Address</label>
+            <input
+              type="email"
+              name="confirmEmail"
+              id="confirmEmail"
+              placeholder="Confirm Email Address"
+              value="<%= locals.formData?.confirmEmail || '' %>"
+              required
+            />
+          </div>
+          <div class="form-field">
             <label for="password">Password</label>
             <input
               type="password"
@@ -67,9 +78,11 @@
               required
             />
           </div>
+        
+        
+          <%- include("../partials/passwordErrors.ejs") %>
+          <button type="submit" class="create-button">Create User</button>
         </div>
-        <%# include("../partials/passwordErrors.ejs") %>
-        <button type="submit" class="form-button">Create User</button>
       </form>
     </main>
     <footer>Thought Windows</footer>

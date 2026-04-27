@@ -32,12 +32,21 @@ shareRouter.post("/folder/:folderID", checkAuth, async (req, res, next) => {
     const files = await prisma.file.findMany({
       where: { folderID: parseInt(req.params.folderID) },
     });
+    const days = parseInt(req.body.availableFor);
+    if (isNaN(days) || days < 1 || days > 365) {
+      return res.render("shareFolder", {
+        folder: folder,
+        files: files,
+        error: "Duration must be between 1 and 365 days",
+      });
+    }
     const shareLink = await prisma.shareLink.create({
       data: {
         folderID: parseInt(req.params.folderID),
-        availableFor: parseInt(req.body.availableFor),
+        availableFor: days,
       },
     });
+
     res.render("shared", {
       folder: folder,
       files: files,

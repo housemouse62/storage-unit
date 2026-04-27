@@ -19,9 +19,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 
-const { generateToken, doubleCsrfProtection } = doubleCsrf({
+const { generateCsrfToken, doubleCsrfProtection } = doubleCsrf({
   getSecret: () => process.env.SESSION_SECRET,
   cookieName: "x-csrf-token",
+  getSessionIdentifier: (req) => req.sessionID,
+  cookieOptions: { secure: false, sameSite: "strict", httpOnly: true },
+  getCsrfTokenFromRequest: (req) => req.body?._csrf,
 });
 
 app.use(
@@ -40,12 +43,16 @@ app.use(
   }),
 );
 
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(doubleCsrfProtection);
 
 app.use((req, res, next) => {
   res.locals.user = req.user || false;
-  res.locals.csrfToken = generateToken(req, res);
+  res.locals.csrfToken = generateCsrfToken(req, res);
   next();
 });
 
@@ -53,12 +60,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-
-app.use(cookieParser());
-app.use(doubleCsrfProtection);
 
 app.use("/", userRouter);
 app.use("/share", shareRouter);
@@ -69,7 +70,11 @@ app.use((err, req, res, next) => {
   console.error(err);
   res
     .status(500)
-    .render("errorPage", { error: err.message, formatDate: formatDate });
+    .render("errorPage", {
+      error: err.message,
+      formatDate: formatDate,
+      user: req.user || false,
+    });
 });
 
 const PORT = process.env.PORT || 3000;

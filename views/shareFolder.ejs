@@ -23,9 +23,12 @@
         <form class="share-folder-form" action="/share/folder/<%= folder.id %>" method="post">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <label for="availableFor"><b>Share Folder For:</b></label>
-            <input type="text" name="availableFor" class="folder-input" id="shareDuration" placeholder="Whole numbers only" /><b> Days</b>
+            <input type="number" min="1" max="365" name="availableFor" class="folder-input" id="shareDuration" /><b> Days</b>
             <button type="submit" class="folder-button share">Share Folder</button>
         </form>
+        <% if (typeof error !== 'undefined') {%>
+        <p class="error"><%= error %></p>
+        <% } %>
     </div>
     </div>
       <table>
