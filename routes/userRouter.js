@@ -87,7 +87,7 @@ userRouter.post(
   },
 );
 
-userRouter.post("/logOut", (req, res, next) => {
+userRouter.post("/logout", (req, res, next) => {
   try {
     req.logout((err) => {
       if (err) {

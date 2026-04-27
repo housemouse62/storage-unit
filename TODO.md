@@ -34,5 +34,18 @@
 
 - [x] Remove `console.log` calls from routes before portfolio presentation
 - [x] Remove Cloudinary config duplication in `fileRouter.js` (lines 13–17) — use `config/cloudinary.js` only
-- [ ] Add `uploads/` directory to `.gitignore` (or clean up the 40 stale local files)
-- [ ] Validate `parseInt()` params in routes — a non-numeric ID silently becomes `NaN`
+- [x] Add `uploads/` directory to `.gitignore` (or clean up the 40 stale local files)
+- [x] Validate `parseInt()` params in routes — a non-numeric ID silently becomes `NaN`
+
+## Security (from audit)
+
+- [x] XSS in `errorPage.ejs` — uses `<%-` (unescaped) to render `locals.error`, change to `<%=`
+- [x] Logout route case mismatch — form posts to `/logout` but route is `/logOut`, verify they match
+- [x] Session config — `resave: true` and `saveUninitialized: true` in `app.js`, prefer `false` for both
+
+## Accessibility (from audit)
+
+- [ ] Malformed error `<p>` tags in `allFolders.ejs` and `oneFolder.ejs` — EJS conditionals render content outside the element, breaking `aria-live`
+- [ ] Missing `<label>` for file name input in `oneFolder.ejs` (`id="name"`, placeholder only)
+- [ ] Email field not repopulating on login error — `loginPage.ejs` uses `<%` instead of `<%=` on value attribute
+- [ ] Caption typo in `allFolders.ejs` — "All Folders is the Storage Unit" → "in"
