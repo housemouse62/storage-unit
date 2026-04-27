@@ -3,6 +3,8 @@ import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import methodOverride from "method-override";
+import cookieParser from "cookie-parser";
+import { doubleCsrf } from "csrf-csrf";
 import expressSession from "express-session";
 import passport from "./config/passport.js";
 import { prisma } from "./db/prismaClient.js";
@@ -16,6 +18,11 @@ import formatDate from "./utils/formatDate.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+
+const { generateToken, doubleCsrfProtection } = doubleCsrf({
+  getSecret: () => process.env.SESSION_SECRET,
+  cookieName: "x-csrf-token",
+});
 
 app.use(
   expressSession({
@@ -38,6 +45,7 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
   res.locals.user = req.user || false;
+  res.locals.csrfToken = generateToken(req, res);
   next();
 });
 
@@ -48,6 +56,9 @@ app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+
+app.use(cookieParser());
+app.use(doubleCsrfProtection);
 
 app.use("/", userRouter);
 app.use("/share", shareRouter);

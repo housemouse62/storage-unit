@@ -2,10 +2,9 @@
 
 ## Critical
 
-- [ ] Enforce share link expiry — expired links currently still grant access
-- [ ] Add CSRF protection to all forms (`csurf` or similar)
+- [x] Add CSRF protection to all forms (`csrf-csrf`)
 - [ ] Add rate limiting to `/login` and `/createUser` (`express-rate-limit`)
-- [ ] Remove duplicate bcrypt package — keep `bcryptjs`, remove `bcrypt` from package.json
+- [x] Remove duplicate bcrypt package — keep `bcryptjs`, remove `bcrypt` from package.json
 
 ## High
 

@@ -21,17 +21,20 @@
     <div class="folder-info-div">
       <h2 id="folder-title" class="folder-title"><%= folder.name %></h2><div>
         <form id="edit-form" action="/folder/<%= folder.id %>?_method=PATCH" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="text" name="name" id="folder-input" class="hidden" value="<%= folder.name %>"/>
         <button id="edit-button" class="folder-button" type="button">Edit Folder Name</button>
         </form>
     </div>
     <div>
         <form id="share-folder" action="/share/folder/<%= folder.id %>" method="get">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button id="share-button" class="folder-button" type="submit">Share Folder</button>
       </form>
     </div>
     <div>
         <form id="delete-form" action="/folder/<%= folder.id %>?from=/folder/<%= folder.id %>&_method=DELETE" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button id="delete-button" class="folder-button" type="submit">Delete Folder</button>
         </form>
     </div>
@@ -63,6 +66,7 @@
             name="folderID"
             value="<%= folder.id %>"
           />
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <label for="uploaded_file" class="upload-file">Choose File:</label><span id="file-name">No File Chosen</span>
           <input
             type="file"

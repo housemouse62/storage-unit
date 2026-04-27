@@ -34,6 +34,7 @@
           </button>
         </form>
         <form action="/file/<%= file.id %>?_method=DELETE" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <input type="hidden" name="from" value="<%= from %>" />
           <button class="file-button delete-button" type="submit">
             Delete File

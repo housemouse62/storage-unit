@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { body, validationResult } from "express-validator";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { prisma } from "../db/prismaClient.js";
 
 const userRouter = express.Router();

@@ -18,6 +18,7 @@
     </header>
     <main id="main-content" class="page-main">
       <form method="POST" action="/login">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div class="form-fields">
           <div class="login-user">
             <h1 class="login">Log In</h1>

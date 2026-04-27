@@ -20,6 +20,7 @@
     </header>
     <main id="main-content" class="page-main">
       <form method="POST" action="/createUser">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div class="form-fields">
           <div class="create-user-title">
             <h1 class="create-user">Create New User</h1>

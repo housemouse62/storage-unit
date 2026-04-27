@@ -36,6 +36,7 @@
     </table>
     <form class="new-folder-form" action="/folder/create" method="post">
       <label for="name"><b>Create New Folder</b></label>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <input type="text" name="name" class="folder-input" id="name" placeholder="Folder Name" />
       <button type="submit" class="folder-button" id="create-button">Create</button>
     </form>
