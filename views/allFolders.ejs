@@ -18,7 +18,7 @@
     <main id="main-content">
     <h1>All Folders</h1>
     <table>
-        <caption>All Folders is the Storage Unit</caption>
+        <caption>All Folders in the Storage Unit</caption>
         <thead>
             <tr>
                 <th scope="col"><span class="visually-hidden">Icon</span></th>
@@ -27,7 +27,7 @@
         </thead>
         <tbody>
             <% if (folders.length === 0) { %>
-                <p>No folders yet. Create one above.</p>
+                <p>No folders yet. Create one below.</p>
                 <% } else { %>
             <% folders.forEach((folder) => { %>
             <tr class="folder-row">
@@ -45,7 +45,7 @@
       <button type="submit" class="folder-button" id="create-button">Create</button>
     </form>
     <% if (error === 'name') { %>
-    <p class="error" aria-live="polite"></p>Folder name cannot be empty.</p>
+    <p class="error" aria-live="polite">Folder name cannot be empty.</p>
     <% } %>
     </main>
     <footer>Thought Windows
