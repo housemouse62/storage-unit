@@ -7,63 +7,82 @@ const folderRouter = express.Router();
 
 folderRouter.use(checkAuth);
 
-folderRouter.post("/create", async (req, res) => {
-  console.log(req.body);
-  await prisma.folder.create({
-    data: {
-      name: req.body.name,
-      ownerID: req.user.id,
-    },
-  });
-  const folders = await prisma.folder.findMany();
-  res.render("allFolders", { folders: folders });
+folderRouter.post("/create", async (req, res, next) => {
+  try {
+    await prisma.folder.create({
+      data: {
+        name: req.body.name,
+        ownerID: req.user.id,
+      },
+    });
+    const folders = await prisma.folder.findMany();
+    res.render("allFolders", { folders: folders });
+  } catch (err) {
+    next(err);
+  }
 });
 
-folderRouter.get("/:folderID", async (req, res) => {
-  const folder = await prisma.folder.findUnique({
-    where: { id: parseInt(req.params.folderID) },
-  });
-  const files = await prisma.file.findMany({
-    where: { folderID: parseInt(req.params.folderID) },
-  });
-  res.render("oneFolder", {
-    folder: folder,
-    files: files,
-    formatFileSize: formatFileSize,
-    error: req.query.error,
-  });
+folderRouter.get("/:folderID", async (req, res, next) => {
+  try {
+    const folder = await prisma.folder.findUnique({
+      where: { id: parseInt(req.params.folderID) },
+    });
+    const files = await prisma.file.findMany({
+      where: { folderID: parseInt(req.params.folderID) },
+    });
+    res.render("oneFolder", {
+      folder: folder,
+      files: files,
+      formatFileSize: formatFileSize,
+      error: req.query.error,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
-folderRouter.delete("/:folderID", async (req, res) => {
-  await prisma.folder.delete({
-    where: { id: parseInt(req.params.folderID) },
-  });
-  const folders = await prisma.folder.findMany();
-  res.render("allFolders", { folders: folders });
+folderRouter.delete("/:folderID", async (req, res, next) => {
+  try {
+    await prisma.folder.delete({
+      where: { id: parseInt(req.params.folderID) },
+    });
+    const folders = await prisma.folder.findMany();
+    res.render("allFolders", { folders: folders });
+  } catch (err) {
+    next(err);
+  }
 });
 
-folderRouter.patch("/:folderID", async (req, res) => {
-  const folder = await prisma.folder.update({
-    where: { id: parseInt(req.params.folderID) },
-    data: { name: req.body.name },
-  });
-  console.log("req.params.folderID", req.params.folderID);
-  const files = await prisma.file.findMany({
-    where: { folderID: parseInt(req.params.folderID) },
-  });
-  console.log(folder);
-  res.render("oneFolder", {
-    folder: folder,
-    files: files,
-    formatFileSize: formatFileSize,
-    error: "",
-  });
+folderRouter.patch("/:folderID", async (req, res, next) => {
+  try {
+    const folder = await prisma.folder.update({
+      where: { id: parseInt(req.params.folderID) },
+      data: { name: req.body.name },
+    });
+    console.log("req.params.folderID", req.params.folderID);
+    const files = await prisma.file.findMany({
+      where: { folderID: parseInt(req.params.folderID) },
+    });
+    console.log(folder);
+    res.render("oneFolder", {
+      folder: folder,
+      files: files,
+      formatFileSize: formatFileSize,
+      error: "",
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
-folderRouter.get("/", async (req, res) => {
-  const allFolders = await prisma.folder.findMany();
+folderRouter.get("/", async (req, res, next) => {
+  try {
+    const allFolders = await prisma.folder.findMany();
 
-  res.render("allFolders", { folders: allFolders });
+    res.render("allFolders", { folders: allFolders });
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default folderRouter;

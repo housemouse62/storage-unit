@@ -174,6 +174,39 @@ header {
 main {
   padding: 10px;
 }
+
+/* index page */
+.index-subtitle {
+  margin: 1rem;
+}
+
+.body-links {
+  margin: 1rem 0 1rem 1.5rem;
+}
+
+/* login page */
+.login-label {
+  margin-right: 1rem;
+}
+.form-field {
+  margin: 1rem;
+}
+
+.login-button {
+  background-color: var(--color-bg);
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-family: "inter";
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.login-button:hover {
+  background-color: var(--color-accent);
+  cursor: pointer;
+}
+
 /* folders */
 .visually-hidden {
   display: none;
@@ -223,6 +256,12 @@ table caption {
   display: none;
 }
 
+.folder-input {
+  height: 1.5rem;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
 /* file details */
 dl {
   display: grid;
@@ -313,7 +352,8 @@ dd {
 }
 
 #edit-button:hover,
-#share-button:hover {
+#share-button:hover,
+#create-button:hover {
   background-color: var(--color-accent);
   cursor: pointer;
 }
@@ -333,6 +373,10 @@ dd {
 .size-error-div {
   display: flex;
   margin: 1rem 0 0 12rem;
+}
+
+.share {
+  margin-left: 0.5rem;
 }
 /* footer */
 footer {

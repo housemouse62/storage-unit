@@ -11,6 +11,7 @@ import fileRouter from "./routes/fileRouter.js";
 import folderRouter from "./routes/folderRouter.js";
 import userRouter from "./routes/userRouter.js";
 import shareRouter from "./routes/shareRouter.js";
+import formatDate from "./utils/formatDate.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +53,13 @@ app.use("/", userRouter);
 app.use("/share", shareRouter);
 app.use("/folder", folderRouter);
 app.use("/file", fileRouter);
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res
+    .status(500)
+    .render("errorPage", { error: err.message, formatDate: formatDate });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {

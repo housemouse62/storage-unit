@@ -8,7 +8,7 @@
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="main-header">
-        <a href="/"><img class="small-logo" src="/icons/storage-unit-icon.png" /></a>
+        <a href="/"><img class="small-logo" src="/icons/storage-unit-icon.png"  alt="storage unit logo"/></a>
       <nav class="main-nav">
         <a class="main-links" href="/folder">ALL FOLDERS</a>
         <a class="main-links" href="/file">ALL FILES</a>
@@ -35,9 +35,9 @@
         </tbody>
     </table>
     <form class="new-folder-form" action="/folder/create" method="post">
-      <label for="name">Create New Folder</label>
-      <input type="text" name="name" id="name" placeholder="Folder Name" />
-      <button type="submit">Create</button>
+      <label for="name"><b>Create New Folder</b></label>
+      <input type="text" name="name" class="folder-input" id="name" placeholder="Folder Name" />
+      <button type="submit" class="folder-button" id="create-button">Create</button>
     </form>
     </main>
     <footer>Thought Windows

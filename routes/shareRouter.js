@@ -2,6 +2,7 @@ import express from "express";
 import checkAuth from "../middleware/auth.js";
 import { prisma } from "../db/prismaClient.js";
 import formatFileSize from "../utils/formatFileSize.js";
+import formatDate from "../utils/formatDate.js";
 
 const shareRouter = express.Router();
 
@@ -48,6 +49,7 @@ shareRouter.get("/:shareID", async (req, res) => {
   if (!shareInfo) {
     res.render("errorPage", {
       error: "Share link not found",
+      formatDate: formatDate,
     });
     return;
   }
@@ -70,14 +72,23 @@ shareRouter.get("/:shareID", async (req, res) => {
   if (diff > avail_ms) {
     res.render("errorPage", {
       expired: expiredAt,
+      formatDate: formatDate,
     });
   } else {
     res.render("sharedFolder", {
       folder: folder,
       files: files,
       formatFileSize: formatFileSize,
+      formatDate: formatDate,
     });
   }
+});
+
+shareRouter.get("/:fileID/download", async (req, res) => {
+  const file = await prisma.file.findUnique({
+    where: { id: parseInt(req.params.fileID) },
+  });
+  res.download(file.url, file.name);
 });
 
 export default shareRouter;

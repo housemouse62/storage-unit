@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Storage Unit | Logged Out</title>
+    <title>Storage Unit | Folder Detail</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
   </head>
   <body>
@@ -16,7 +16,11 @@
         <%- include("../partials/loginLogout.ejs") %>
       </nav>
     </header>
-    </header>
-    <h1>Logged Out</h1>
+    <main>
+    <h1>Something went wrong</h1>
+    <h2><%= locals.error || (locals.expired ? 'Link Expired at: ' + formatDate(locals.expired) : '') %></h2>
+    </main>
+    <footer>Thought Windows</footer>
+      <script src="/scripts/main.js"></script>
   </body>
 </html>
