@@ -16,7 +16,7 @@
         <%- include("../partials/loginLogout.ejs") %>
       </nav>
     </header>
-    <main>
+    <main id="main-content">
     <h1>Share Folder</h1>
     <div class="folder-info-div">
       <h2 id="folder-title" class="folder-title"><%= folder.name %></h2><div>
@@ -27,7 +27,7 @@
             <button type="submit" class="folder-button share">Share Folder</button>
         </form>
         <% if (typeof error !== 'undefined') {%>
-        <p class="error"><%= error %></p>
+        <p class="error" aria-live="polite"><%= error %></p>
         <% } %>
     </div>
     </div>

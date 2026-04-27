@@ -16,7 +16,7 @@
         <%- include("../partials/loginLogout.ejs") %>
       </nav>
     </header>
-    <main>
+    <main id="main-content">
     <h1>Folder Detail</h1>
     <div class="folder-info-div">
       <h2 id="folder-title" class="folder-title"><%= folder.name %></h2><div>
@@ -35,7 +35,7 @@
     <div>
         <form id="delete-form" action="/folder/<%= folder.id %>?from=/folder/<%= folder.id %>&_method=DELETE" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button id="delete-button" class="folder-button" type="submit">Delete Folder</button>
+            <button id="delete-button" class="folder-button" type="submit" onclick="return confirm('Delete this folder? This cannot be undone.')">Delete Folder</button>
         </form>
     </div>
     </div>
@@ -79,9 +79,9 @@
         </form>
   </div>
   <div class="size-error-div">
-    <%= error === 'size' ? 'File exceeds 4MB size limit.' : '' %>
-    <%= error === 'filetype' ? 'Filetype not allowed. No .zip or .exe allowed.' : '' %>
-    <%= error === 'name' ? 'Folder name cannot be empty.' : '' %>
+    <p class="error" aria-live="polite"><%= error === 'size' ? 'File exceeds 4MB size limit.' : '' %></p>
+    <p class="error" aria-live="polite"></p><%= error === 'filetype' ? 'Filetype not allowed. No .zip or .exe allowed.' : '' %></p>
+    <p class="error" aria-live="polite"></p><%= error === 'name' ? 'Folder name cannot be empty.' : '' %></p>
   </div>
     </main>
     <footer>Thought Windows</footer>

@@ -184,7 +184,7 @@ main {
   margin: 1rem 0 1rem 1.5rem;
 }
 
-/* login page */
+/* login page, create user page */
 .login-label {
   margin-right: 1rem;
 }
@@ -271,45 +271,6 @@ table caption {
   border-radius: 5px;
   font-size: 0.9rem;
 }
-/* file details */
-dl {
-  display: grid;
-  grid-template-columns: max-content auto;
-  margin: 0.5rem 0 2.5rem 1.5rem;
-  line-height: 2rem;
-}
-
-dt {
-  grid-column-start: 1;
-}
-
-dd {
-  grid-column-start: 2;
-  margin-left: 1.5rem;
-}
-
-.file-button-div {
-  display: flex;
-  gap: 1rem;
-}
-
-.file-button {
-  background-color: var(--color-bg);
-  padding: 4px 8px;
-  border-radius: 5px;
-  font-family: "inter";
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.file-button.download-button:hover {
-  background-color: var(--color-accent);
-  cursor: pointer;
-}
-.file-button.delete-button:hover {
-  background-color: var(--color-secondary);
-  cursor: pointer;
-}
 
 /* one folder */
 .folder-info-div {
@@ -334,7 +295,8 @@ dd {
 }
 
 .choose-file,
-.upload-file {
+.upload-file,
+.copy-url {
   background-color: var(--color-bg);
   padding: 4px 8px;
   border: 1px solid black;
@@ -345,7 +307,8 @@ dd {
 }
 
 .choose-file:hover,
-.upload-file:hover {
+.upload-file:hover,
+.copy-url:hover {
   background-color: var(--color-accent);
   cursor: pointer;
 }
@@ -387,6 +350,55 @@ dd {
 .share {
   margin-left: 0.5rem;
 }
+
+.copy-input {
+  height: 1.7rem;
+  text-align: right;
+  width: 55ch;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+/* file details */
+dl {
+  display: grid;
+  grid-template-columns: max-content auto;
+  margin: 0.5rem 0 2.5rem 1.5rem;
+  line-height: 2rem;
+}
+
+dt {
+  grid-column-start: 1;
+}
+
+dd {
+  grid-column-start: 2;
+  margin-left: 1.5rem;
+}
+
+.file-button-div {
+  display: flex;
+  gap: 1rem;
+}
+
+.file-button {
+  background-color: var(--color-bg);
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-family: "inter";
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.file-button.download-button:hover {
+  background-color: var(--color-accent);
+  cursor: pointer;
+}
+.file-button.delete-button:hover {
+  background-color: var(--color-secondary);
+  cursor: pointer;
+}
+
 /* footer */
 footer {
   display: flex;

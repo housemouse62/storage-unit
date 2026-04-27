@@ -15,12 +15,12 @@
 
 ## Accessibility (WCAG 2.1 AA)
 
-- [ ] Add `id="main-content"` to all pages — skip link silently fails without it
+- [x] Add `id="main-content"` to all pages — skip link silently fails without it
   - `allFolders.ejs`, `oneFolder.ejs`, `allFiles.ejs`, `fileDetails.ejs`, `loggedOutPage.ejs`, `errorPage.ejs`
-- [ ] Fix `vale=` typo → `value=` in `loginPage.ejs`
-- [ ] Remove duplicate `</header>` tag in `loggedOutPage.ejs`
+- [x] Fix `vale=` typo → `value=` in `loginPage.ejs`
+- [x] Remove duplicate `</header>` tag in `loggedOutPage.ejs`
 - [ ] Add delete confirmation before permanent file/folder deletion (modal or `confirm()`)
-- [ ] Add `aria-live="polite"` or `role="alert"` to form error containers so screen readers announce them
+- [x] Add `aria-live="polite"` or `role="alert"` to form error containers so screen readers announce them
 - [ ] Add `autocomplete="current-password"` to login password field
 
 ## UX

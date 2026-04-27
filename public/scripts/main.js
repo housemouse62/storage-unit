@@ -14,14 +14,18 @@ const toggle = () => {
   input.classList.toggle("hidden");
 };
 
-editButton.addEventListener("click", toggle);
+if (editButton) {
+  editButton.addEventListener("click", toggle);
+}
 
 const fileInput = document.getElementById("uploaded_file");
 const fileNameDisplay = document.getElementById("file-name");
 
-fileInput.addEventListener("change", () => {
-  fileNameDisplay.textContent = fileInput.files[0]?.name || "No file chosen";
-});
+if (fileInput) {
+  fileInput.addEventListener("change", () => {
+    fileNameDisplay.textContent = fileInput.files[0]?.name || "No file chosen";
+  });
+}
 
 const fileValidation = () => {
   const fi = document.getElementById("uploaded_file");
@@ -31,3 +35,11 @@ const fileValidation = () => {
     return;
   }
 };
+
+const copyBtn = document.getElementById("copy-btn");
+if (copyBtn) {
+  copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(document.getElementById("share-url").value);
+    copyBtn.textContent = "Copied";
+  });
+}

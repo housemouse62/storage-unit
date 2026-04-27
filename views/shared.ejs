@@ -16,10 +16,14 @@
         <%- include("../partials/loginLogout.ejs") %>
       </nav>
     </header>
-    <main>
+    <main id="main-content">
     <h1>Shared Folder</h1>
     <div class="folder-info-div">
-      <h2 id="folder-title" class="folder-title"><%= folder.name %> Folder Share Link: <%= shareURL %></h2><div>
+        <h2 id="folder-title" class="folder-title"><%= folder.name %></h2>
+        <div class="share-url-dev">
+            <input type="text" id="share-url" class="copy-input" readonly value="<%= shareURL %>" />
+            <button type="button" id="copy-btn" class="copy-url">Copy</button>
+        </div>
     </div>
     </div>
       <table>
