@@ -40,6 +40,9 @@
       <input type="text" name="name" class="folder-input" id="name" placeholder="Folder Name" />
       <button type="submit" class="folder-button" id="create-button">Create</button>
     </form>
+    <% if (error === 'name') { %>
+    <p class="error">Folder name cannot be empty.</p>
+    <% } %>
     </main>
     <footer>Thought Windows
     </footer>

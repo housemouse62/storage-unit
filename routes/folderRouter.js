@@ -9,14 +9,18 @@ folderRouter.use(checkAuth);
 
 folderRouter.post("/create", async (req, res, next) => {
   try {
+    const name = req.body.name?.trim();
+    if (!name) {
+      return res.redirect("/folder?error=name");
+    }
     await prisma.folder.create({
       data: {
-        name: req.body.name,
+        name: name,
         ownerID: req.user.id,
       },
     });
     const folders = await prisma.folder.findMany();
-    res.render("allFolders", { folders: folders });
+    res.render("allFolders", { folders: folders, error: "" });
   } catch (err) {
     next(err);
   }
@@ -47,7 +51,7 @@ folderRouter.delete("/:folderID", async (req, res, next) => {
       where: { id: parseInt(req.params.folderID) },
     });
     const folders = await prisma.folder.findMany();
-    res.render("allFolders", { folders: folders });
+    res.render("allFolders", { folders: folders, error: "" });
   } catch (err) {
     next(err);
   }
@@ -55,9 +59,13 @@ folderRouter.delete("/:folderID", async (req, res, next) => {
 
 folderRouter.patch("/:folderID", async (req, res, next) => {
   try {
+    const name = req.body.name?.trim();
+    if (!name) {
+      return res.redirect(`/folder/${req.params.folderID}?error=name`);
+    }
     const folder = await prisma.folder.update({
       where: { id: parseInt(req.params.folderID) },
-      data: { name: req.body.name },
+      data: { name: name },
     });
     console.log("req.params.folderID", req.params.folderID);
     const files = await prisma.file.findMany({
@@ -79,7 +87,7 @@ folderRouter.get("/", async (req, res, next) => {
   try {
     const allFolders = await prisma.folder.findMany();
 
-    res.render("allFolders", { folders: allFolders });
+    res.render("allFolders", { folders: allFolders, error: req.query.error });
   } catch (err) {
     next(err);
   }

@@ -10,8 +10,8 @@
 
 - [x] Uncomment error display in `createUserPage.ejs` — validation errors are never shown to users
 - [x] Add email validation on user registration (`express-validator` is installed, just unused for email)
-- [ ] Validate share duration input — reject 0, negative numbers, and unreasonably large values
-- [ ] Validate folder names — reject empty strings on create and rename
+- [x] Validate share duration input — reject 0, negative numbers, and unreasonably large values
+- [x] Validate folder names — reject empty strings on create and rename
 
 ## Accessibility (WCAG 2.1 AA)
 
