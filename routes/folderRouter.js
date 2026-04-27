@@ -28,11 +28,14 @@ folderRouter.post("/create", async (req, res, next) => {
 
 folderRouter.get("/:folderID", async (req, res, next) => {
   try {
+    const folderID = parseInt(req.params.folderID);
+    if (isNaN(folderID)) return next(new Error("Invalid ID"));
+
     const folder = await prisma.folder.findUnique({
-      where: { id: parseInt(req.params.folderID) },
+      where: { id: folderID },
     });
     const files = await prisma.file.findMany({
-      where: { folderID: parseInt(req.params.folderID) },
+      where: { folderID: folderID },
     });
     res.render("oneFolder", {
       folder: folder,
@@ -47,8 +50,11 @@ folderRouter.get("/:folderID", async (req, res, next) => {
 
 folderRouter.delete("/:folderID", async (req, res, next) => {
   try {
+    const folderID = parseInt(req.params.folderID);
+    if (isNaN(folderID)) return next(new Error("Invalid ID"));
+
     await prisma.folder.delete({
-      where: { id: parseInt(req.params.folderID) },
+      where: { id: folderID },
     });
     const folders = await prisma.folder.findMany();
     res.render("allFolders", { folders: folders, error: "" });
@@ -64,7 +70,7 @@ folderRouter.patch("/:folderID", async (req, res, next) => {
       return res.redirect(`/folder/${req.params.folderID}?error=name`);
     }
     const folderID = parseInt(req.params.folderID);
-    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+    if (isNaN(folderID)) return next(new Error("Invalid ID"));
 
     const folder = await prisma.folder.update({
       where: { id: folderID },

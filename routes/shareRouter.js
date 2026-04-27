@@ -9,7 +9,7 @@ const shareRouter = express.Router();
 shareRouter.get("/folder/:folderID", checkAuth, async (req, res, next) => {
   try {
     const folderID = parseInt(req.params.folderID);
-    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+    if (isNaN(folderID)) return next(new Error("Invalid ID"));
 
     const folder = await prisma.folder.findUnique({
       where: { id: folderID },
@@ -30,7 +30,7 @@ shareRouter.get("/folder/:folderID", checkAuth, async (req, res, next) => {
 shareRouter.post("/folder/:folderID", checkAuth, async (req, res, next) => {
   try {
     const folderID = parseInt(req.params.folderID);
-    if (isNaN(fileID)) return next(new Error("Invalid ID"));
+    if (isNaN(folderID)) return next(new Error("Invalid ID"));
 
     const folder = await prisma.folder.findUnique({
       where: { id: folderID },
@@ -46,8 +46,6 @@ shareRouter.post("/folder/:folderID", checkAuth, async (req, res, next) => {
         error: "Duration must be between 1 and 365 days",
       });
     }
-    const folderID = parseInt(req.params.folderID);
-    if (isNaN(fileID)) return next(new Error("Invalid ID"));
 
     const shareLink = await prisma.shareLink.create({
       data: {
