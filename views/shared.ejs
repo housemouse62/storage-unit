@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Storage Unit | Folder Detail</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="main-header">
+      <a href="/"><img class="small-logo" src="/icons/storage-unit-icon.png" /></a>
+      <nav class="main-nav">
+        <a class="main-links" href="/folder">ALL FOLDERS</a>
+        <a class="main-links" href="/file">ALL FILES</a>
+        <%- include("../partials/loginLogout.ejs") %>
+      </nav>
+    </header>
+    <main>
+    <h1>Share Folder</h1>
+    <div class="folder-info-div">
+      <h2 id="folder-title" class="folder-title"><%= folder.name %> Folder Share Link: <%= shareURL %></h2><div>
+    </div>
+    </div>
+      <table>
+        <caption>All Files in the <%= folder.name %> Folder</caption>
+        <thead>
+            <tr>
+                <th scope="col"><span class="visually-hidden">Icon</span></th>
+                <th scope="col">Name</th>
+                <th scope="col">Size</th>
+            </tr>
+        </thead>
+        <tbody>
+    <% files.forEach((file) => { %>
+    <tr class="file-row">
+        <td><a class='open-link' href='/file/<%= file.id %>?from=/folder/<%= folder.id %>'><svg class="file-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><title>file</title><path d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2Z"/></svg></a></td>
+        <td><a class='open-link' href='/file/<%= file.id %>?from=/folder/<%= folder.id %>'><%= file.name %></a></td>
+        <td><%= formatFileSize(file.size) %></td>
+    </tr>
+    <% }); %>
+        </tbody>
+    </table>
+    </main>
+    <footer>Thought Windows</footer>
+      <script src="/scripts/main.js"></script>
+  </body>
+</html>

@@ -56,6 +56,7 @@ folderRouter.patch("/:folderID", async (req, res) => {
     folder: folder,
     files: files,
     formatFileSize: formatFileSize,
+    error: "",
   });
 });
 

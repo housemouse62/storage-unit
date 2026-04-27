@@ -312,7 +312,8 @@ dd {
   font-weight: 500;
 }
 
-#edit-button:hover {
+#edit-button:hover,
+#share-button:hover {
   background-color: var(--color-accent);
   cursor: pointer;
 }

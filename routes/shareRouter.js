@@ -23,14 +23,19 @@ shareRouter.post("/folder/:folderID", checkAuth, async (req, res) => {
   const folder = await prisma.folder.findUnique({
     where: { id: parseInt(req.params.folderID) },
   });
+  const files = await prisma.file.findMany({
+    where: { folderID: parseInt(req.params.folderID) },
+  });
   const shareLink = await prisma.shareLink.create({
     data: {
       folderID: parseInt(req.params.folderID),
-      availableFor: parseInt(req.body.duration),
+      availableFor: parseInt(req.body.availableFor),
     },
   });
   res.render("shared", {
     folder: folder,
+    files: files,
+    formatFileSize: formatFileSize,
     shareLink: shareLink,
     shareURL: `${process.env.BASE_URL}/share/${shareLink.id}`,
   });
