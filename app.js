@@ -75,6 +75,7 @@ app.use((err, req, res, next) => {
     error: err.message,
     formatDate: formatDate,
     user: req.user || false,
+    csrfToken: res.locals.csrfToken,
   });
 });
 
