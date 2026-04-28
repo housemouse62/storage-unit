@@ -76,7 +76,7 @@ fileRouter.get("/:fileID/download", async (req, res, next) => {
     const file = await prisma.file.findUnique({
       where: { id: fileID },
     });
-    res.download(file.url, file.name);
+    res.redirect(file.url);
   } catch (err) {
     next(err);
   }
