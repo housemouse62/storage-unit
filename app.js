@@ -26,7 +26,7 @@ const { generateCsrfToken, doubleCsrfProtection } = doubleCsrf({
   cookieName: "x-csrf-token",
   getSessionIdentifier: (req) => req.sessionID,
   cookieOptions: { secure: process.env.NODE_ENV === "production", sameSite: "strict", httpOnly: true },
-  getCsrfTokenFromRequest: (req) => req.body?._csrf,
+  getCsrfTokenFromRequest: (req) => req.body?._csrf || req.query?._csrf,
 });
 
 app.use(

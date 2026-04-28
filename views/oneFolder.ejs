@@ -63,14 +63,13 @@
           </tbody>
         </table>
         <div class="file-upload-div">
-          <form class="file-form" action="/file/upload" enctype="multipart/form-data" method="post">
+          <form class="file-form" action="/file/upload?_csrf=<%= csrfToken %>" enctype="multipart/form-data" method="post">
             <input
               type="hidden"
               id="folderID"
               name="folderID"
               value="<%= folder.id %>"
             />
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <label for="uploaded_file" class="upload-file">Choose File:</label><span id="file-name">No File Chosen</span>
             <input
               type="file"
